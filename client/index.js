@@ -4,16 +4,16 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
-var hashHistory = ReactRouter.hashHistory;
+var browserHistory = ReactRouter.browserHistory;
 
 var App = require('./features/App');
-var MainPage = require('./features/MainPage');
+var Home = require('./features/Home');
 
 ReactDOM.render(
   (
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
       <Route path='/' component={App}>
-        <IndexRoute component={MainPage} />
+        <IndexRoute component={Home} />
       </Route>
     </Router>
   ),
