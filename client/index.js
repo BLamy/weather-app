@@ -5,16 +5,20 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
-var browserHistory = ReactRouter.browserHistory;
+var hashHistory = ReactRouter.hashHistory;
 
 var App = require('./features/App');
 var Home = require('./features/Home');
+var Forecast = require('./features/Forecast');
+var ForecastDetail = require('./features/ForecastDetail');
 
 ReactDOM.render(
   (
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
       <Route path='/' component={App}>
         <IndexRoute component={Home} />
+        <Route path='forecast/:location' component={Forecast} />
+        <Route path='forecast/:location/:day' component={ForecastDetail} />
       </Route>
     </Router>
   ),

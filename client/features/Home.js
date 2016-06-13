@@ -1,9 +1,14 @@
 var React = require('react');
 
+var LocationInputForm = require('../components/LocationInputForm');
+
 var Home = React.createClass({
   render: function () {
     return (
-      <h2>Home Page</h2>
+      <div>
+        <h2>Enter a City and State</h2>
+        <LocationInputForm />
+      </div>
     );
   }
 });
