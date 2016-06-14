@@ -1,4 +1,5 @@
 var React = require('react');
+var Radium = require('radium');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 
@@ -36,8 +37,8 @@ var Forecast = React.createClass({
     var day = dayForecast.dt;
 
     return (
-      <Link key={dayForecast.dt} to={'forecast/' + location + '/' + day}>
-        <WeatherCard mode='small' data={dayForecast} />
+      <Link style={styles.link} key={dayForecast.dt} to={'forecast/' + location + '/' + day}>
+        <WeatherCard style={styles.link} mode='small' data={dayForecast} />
       </Link>
     );
   },
@@ -45,15 +46,15 @@ var Forecast = React.createClass({
     if (this.state.isLoading) {
       return (
         <div>
-          <h2>Loading...</h2>
+          <h2 style={styles.heading}>Loading...</h2>
         </div>
       );
     }
     else {
       return (
         <div>
-          <h2>The {this.props.routeParams.location} Forecast MothaFucka!</h2>
-          <div>
+          <h2 style={styles.heading}>The {this.props.routeParams.location} Forecast MothaFucka!</h2>
+          <div style={styles.forecastContainer}>
             {this.state.forecast.map(this.renderBasicWeatherCard)}
           </div>
         </div>
@@ -62,4 +63,19 @@ var Forecast = React.createClass({
   }
 });
 
-module.exports = Forecast;
+var styles = {
+  heading: {
+    textAlign: 'center'
+  },
+  forecastContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  },
+  link: {
+    textDecoration: 'none'
+  }
+};
+
+module.exports = Radium(Forecast);
