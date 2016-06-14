@@ -1,5 +1,6 @@
 var _ = require('lodash');
 
+// {"_id":5386053,"name":"Rancho San Diego","country":"US","coord":{"lon":-116.935303,"lat":32.747269}}
 var cityCollection = require('../data/cityCollection');
 
 function findCities (collection, searchTerm, limit) {
