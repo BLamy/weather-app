@@ -1,43 +1,42 @@
-var _ = require('lodash');
+import _ from 'lodash'
 
 // {"_id":5386053,"name":"Rancho San Diego","country":"US","coord":{"lon":-116.935303,"lat":32.747269}}
-var cityCollection = require('../data/cityCollection');
+import cityCollection from '../data/cityCollection'
 
 function findCities (collection, searchTerm, limit) {
-  var results = [];
-  for (var i = 0; i < collection.length; i++) {
-    var obj = collection[i];
-    var aMatch = obj.name.toLowerCase().indexOf(searchTerm) !== -1;
+  let results = []
+
+  for (let i = 0; i < collection.length; i++) {
+    let obj = collection[i]
+    let aMatch = obj.name.toLowerCase().indexOf(searchTerm) !== -1
 
     if (aMatch && results.length <= limit) {
-      results.push(obj);
+      results.push(obj)
     }
 
     if (results.length === limit) {
-      break;
+      break
     }
   }
 
-  return results;
+  return results
 }
 
-var getCities = function (searchTerm, limit) {
-  limit = limit ? limit : 10;
-  var cities = [];
+var getCities = function (searchTerm, limit = 10) {
+  let cities = []
 
-  var promise = new Promise(function (resolve, reject) {
-
+  var promise = new Promise((resolve, reject) => {
     if (searchTerm && searchTerm.length >= 3) {
-      cities = findCities(cityCollection, searchTerm, limit);
+      cities = findCities(cityCollection, searchTerm, limit)
     }
     else {
-      cities = [];
+      cities = []
     }
 
-    resolve(cities);
-  });
+    resolve(cities)
+  })
 
-  return promise;
-};
+  return promise
+}
 
-module.exports = getCities;
+export default getCities

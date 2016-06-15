@@ -1,16 +1,11 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ReactRouter = require('react-router');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var IndexRoute = ReactRouter.IndexRoute;
-var hashHistory = ReactRouter.hashHistory;
-
-var App = require('./features/App');
-var Home = require('./features/Home');
-var Forecast = require('./features/Forecast');
-var ForecastDetail = require('./features/ForecastDetail');
+import App from './features/App'
+import Home from './features/Home'
+import Forecast from './features/Forecast'
+import ForecastDetail from './features/ForecastDetail'
 
 ReactDOM.render(
   (
@@ -23,4 +18,4 @@ ReactDOM.render(
     </Router>
   ),
   document.getElementById('app')
-);
+)

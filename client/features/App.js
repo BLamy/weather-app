@@ -1,59 +1,64 @@
-var React = require('react');
-var Radium = require('radium');
+import React, { Component } from 'react'
+import Radium from 'radium'
 
-var IndexLink = require('react-router').IndexLink;
+import { IndexLink } from 'react-router'
 
-var LocationInputForm = require('../components/LocationInputForm');
+import LocationInputForm from '../components/LocationInputForm'
 
-var App = React.createClass({
-  getInitialState: function () {
-    return {
+class App extends Component {
+  constructor () {
+    super()
+    this.state = {
       contentHeight: 0
-    };
-  },
-  handleResize: function () {
-    var offset = 77;
-    var totalHeight = window.innerHeight;
-    var navHeight = this.refs.navbar.scrollHeight;
-    var contentHeight = totalHeight - navHeight - offset;
+    }
+  }
+
+  handleResize () {
+    const offset = 77
+    const totalHeight = window.innerHeight
+    const navHeight = this.refs.navbar.scrollHeight
+    const contentHeight = totalHeight - navHeight - offset
 
     this.setState({
       contentHeight: contentHeight
-    });
-  },
-  componentDidMount: function () {
-    window.addEventListener('resize', this.handleResize);
+    })
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', this.handleResize)
 
     // initial resize
-    this.handleResize();
-  },
-  componentWillUnmount: function () {
-    window.removeEventListener('resize', this.handleResize);
-  },
-  render: function () {
-    var contentContainerHeight = {
+    this.handleResize()
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize.bind(this))
+  }
+  render () {
+    const { navContainer, link, white, contentContainer, title } = styles
+    const contentContainerHeight = {
       height: this.state.contentHeight + 'px'
-    };
+    }
 
     return (
       <div>
-        <nav ref='navbar' style={styles.navContainer}>
-          <IndexLink to='/' style={styles.link}>
-            <h1 style={[styles.title, styles.white]}>WTF's the weather?</h1>
+        <nav ref='navbar' style={navContainer}>
+          <IndexLink to='/' style={link}>
+            <h1 style={[title, white]}>WTF's the weather?</h1>
           </IndexLink>
 
           <LocationInputForm mode='row' />
         </nav>
 
-        <div style={[styles.contentContainer, contentContainerHeight]}>
+        <div style={[contentContainer, contentContainerHeight]}>
           {this.props.children}
         </div>
       </div>
-    );
+    )
   }
-});
+}
 
-var styles = {
+const styles = {
   navContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -79,6 +84,6 @@ var styles = {
   white: {
     color: 'white'
   }
-};
+}
 
-module.exports = Radium(App);
+export default Radium(App)

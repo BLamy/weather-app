@@ -1,65 +1,57 @@
-var utils = {
-  calcWindDirection: calcWindDirection
-};
-
-function calcWindDirection (deg) {
-  var direction;
-
-  if (typeof deg === 'undefined') {
-    deg = 0;
-  }
+export function calcWindDirection (deg = 0) {
+  let direction = 'North'
 
   if (deg < 0) {
-    deg = 360 + deg;
+    deg = 360 + deg
   }
 
   if (deg >= 348.75 || deg < 11.25) {
-    direction = 'North';
+    direction = 'North'
   }
   else if (deg >= 11.25 && deg < 33.75) {
-    direction = 'North-Northeast';
+    direction = 'North-Northeast'
   }
   else if (deg >= 33.75 && deg < 56.25) {
-    direction = 'Northeast';
+    direction = 'Northeast'
   }
   else if (deg >= 56.25 && deg < 78.75) {
-    direction = 'East-Northeast';
+    direction = 'East-Northeast'
   }
   else if (deg >= 78.75 && deg < 101.25) {
-    direction = 'East';
+    direction = 'East'
   }
   else if (deg >= 101.25 && deg < 123.75) {
-    direction = 'East-Southeast';
+    direction = 'East-Southeast'
   }
   else if (deg >= 123.75 && deg < 146.25) {
-    direction = 'Southeast';
+    direction = 'Southeast'
   }
   else if (deg >= 146.25 && deg < 168.75) {
-    direction = 'South-Southeast';
+    direction = 'South-Southeast'
   }
   else if (deg >= 168.75 && deg < 191.25) {
-    direction = 'South';
+    direction = 'South'
   }
   else if (deg >= 191.25 && deg < 213.75) {
-    direction = 'South-Southwest';
+    direction = 'South-Southwest'
   }
   else if (deg >= 213.75 && deg < 236.25) {
-    direction = 'Southwest';
+    direction = 'Southwest'
   }
   else if (deg >= 236.25 && deg < 258.75) {
-    direction = 'West-Southwest';
+    direction = 'West-Southwest'
   }
   else if (deg >= 258.75 && deg < 281.25) {
-    direction = 'West';
+    direction = 'West'
   }
   else if (deg >= 281.25 && deg < 303.75) {
-    direction = 'West-Northwest';
+    direction = 'West-Northwest'
   }
   else if (deg >= 303.75 && deg < 326.25) {
-    direction = 'Northwest';
+    direction = 'Northwest'
   }
   else if (deg >= 326.25 && deg < 348.75) {
-    direction = 'North-Northwest';
+    direction = 'North-Northwest'
   }
 
   /*
@@ -81,7 +73,5 @@ function calcWindDirection (deg) {
     NNW 326.25 - 348.75
   */
 
-  return direction;
+  return direction
 }
-
-module.exports = utils;

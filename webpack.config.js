@@ -7,6 +7,7 @@ var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     './client/index.js'
   ],
   output: {

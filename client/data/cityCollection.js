@@ -1,4 +1,4 @@
-var cityCollection = [
+const cityCollection = [
   {"_id":4070245,"name":"Jones Crossroads","country":"US","coord":{"lon":-85.484657,"lat":31.21073}},
   {"_id":4344544,"name":"Vernon Parish","country":"US","coord":{"lon":-93.183502,"lat":31.11685}},
   {"_id":4215307,"name":"Pennick","country":"US","coord":{"lon":-81.55899,"lat":31.313}},
@@ -19973,4 +19973,4 @@ var cityCollection = [
   {"_id":5415546,"name":"Burnt Mill","country":"US","coord":{"lon":-104.796371,"lat":38.05167}},
 ];
 
-module.exports = cityCollection;
+export default cityCollection

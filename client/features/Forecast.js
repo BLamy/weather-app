@@ -1,69 +1,66 @@
-var React = require('react');
-var Radium = require('radium');
-var ReactRouter = require('react-router');
-var Link = ReactRouter.Link;
+import React, { Component } from 'react'
+import Radium from 'radium'
+import { Link } from 'react-router'
 
-var WeatherCard = require('../components/WeatherCard');
+import WeatherCard from '../components/WeatherCard'
+import { getWeatherByCity } from '../api/Weather'
 
-var Weather = require('../api/Weather');
-
-var Forecast = React.createClass({
-  getInitialState: function () {
-    return {
+class Forecast extends Component {
+  constructor () {
+    super()
+    this.state = {
       isLoading: true,
       forecast: []
-    };
-  },
-  componentDidMount: function () {
-    Weather.getWeatherByCity(this.props.routeParams.location)
-      .then(function (json) {
-        var dataArray = json.data.list;
+    }
+  }
 
-        dataArray.forEach(function(datum) {
-          datum.location = this.props.routeParams.location;
-        }.bind(this));
+  async componentDidMount () {
+    const json = await getWeatherByCity(this.props.routeParams.location)
+    const data = json.data.list
 
-        return dataArray;
-      }.bind(this))
-      .then(function (data) {
-        this.setState({
-          forecast: data,
-          isLoading: false
-        });
-      }.bind(this));
-  },
-  renderBasicWeatherCard: function (dayForecast) {
-    var location = this.props.routeParams.location;
-    var day = dayForecast.dt;
+    data.forEach((datum) => {
+      datum.location = this.props.routeParams.location
+    })
+
+    this.setState({
+      forecast: data,
+      isLoading: false
+    })
+  }
+
+  renderBasicWeatherCard (dayForecast) {
+    const location = this.props.routeParams.location
+    const dayUnixTime = dayForecast.dt
 
     return (
-      <Link style={styles.link} key={dayForecast.dt} to={'forecast/' + location + '/' + day}>
+      <Link style={styles.link} key={dayUnixTime} to={`forecast/${location}/${dayUnixTime}`}>
         <WeatherCard style={styles.link} mode='small' data={dayForecast} />
       </Link>
-    );
-  },
-  render: function () {
+    )
+  }
+
+  render () {
     if (this.state.isLoading) {
       return (
         <div>
           <h2 style={styles.heading}>Loading...</h2>
         </div>
-      );
+      )
     }
     else {
       return (
         <div>
           <h2 style={styles.heading}>The {this.props.routeParams.location} Forecast MothaFucka!</h2>
           <div style={styles.forecastContainer}>
-            {this.state.forecast.map(this.renderBasicWeatherCard)}
+            {this.state.forecast.map(this.renderBasicWeatherCard.bind(this))}
           </div>
         </div>
-      );
+      )
     }
   }
-});
+}
 
-var styles = {
+const styles = {
   heading: {
     textAlign: 'center'
   },
@@ -76,6 +73,6 @@ var styles = {
   link: {
     textDecoration: 'none'
   }
-};
+}
 
-module.exports = Radium(Forecast);
+export default Radium(Forecast)

@@ -1,78 +1,84 @@
-var React = require('react');
-var Radium = require('radium');
+import React, { Component, PropTypes } from 'react'
+import Radium from 'radium'
 
 // var getCities = require('../utils/getCities');
 
-var LocationInputForm = React.createClass({
-  propTypes: {
-    mode: React.PropTypes.oneOf(['row', 'column']).isRequired
-  },
-  contextTypes: {
-    router: React.PropTypes.object
-  },
-  getDefaultProps: function () {
-    return {
-      mode: 'row'
-    };
-  },
-  getInitialState: function () {
-    return {
+class LocationInputForm extends Component {
+  constructor () {
+    super ()
+    this.state = {
       location: '',
       error: ''
-    };
-  },
-  handleChangeLocation: function (e) {
+    }
+  }
+
+  handleChangeLocation (e) {
     this.setState({
       location: e.target.value
-    });
-  },
-  setLocation: function (e) {
+    })
+  }
+
+  setLocation (e) {
     e.preventDefault();
 
     if (!this.state.location) {
-      var error = 'Error: Input field cannot be empty.'
+      const error = 'Error: Input field cannot be empty.'
 
       this.setState({
         error: error
-      });
+      })
 
-      console.error(error);
+      console.warn(error)
     }
     // route to forecast with location param is it's in the right format
     else {
       this.setState({
         error: ''
-      });
+      })
 
       this.context.router.push({
-        pathname: '/forecast/' + encodeURI(this.state.location),
-      });
+        pathname: '/forecast/' + encodeURI(this.state.location)
+      })
     }
-  },
-  render: function () {
-    var mode = this.props.mode;
+  }
+
+  render () {
+    const mode = this.props.mode
+    const { rowContainer, error, button, input, columnContainer } = styles
 
     return (
-      <div style={mode === 'row' ? styles.rowContainer: styles.columnContainer}>
-        <form onSubmit={this.setLocation}>
+      <div style={mode === 'row' ? rowContainer: columnContainer}>
+        <form onSubmit={this.setLocation.bind(this)}>
          <input
             type='text'
             ref='locationInput'
             value={this.state.location}
-            onChange={this.handleChangeLocation}
+            onChange={this.handleChangeLocation.bind(this)}
             placeholder='Boston'
             style={[
-              styles.input,
-              this.state.error && styles.error
+              input,
+              this.state.error && error
             ]} />
-          <button type='submit' style={styles.button}>Get Weather</button>
+          <button type='submit' style={button}>Get Weather</button>
         </form>
       </div>
-    );
+    )
   }
-});
+}
 
-var styles = {
+LocationInputForm.propTypes = {
+  mode: PropTypes.oneOf(['row', 'column']).isRequired
+}
+
+LocationInputForm.contextTypes = {
+  router: PropTypes.object
+}
+
+LocationInputForm.defaultProps = {
+  mode: 'row'
+}
+
+const styles = {
   rowContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -102,6 +108,6 @@ var styles = {
     border: '2px solid red',
     color: 'red'
   }
-};
+}
 
-module.exports = Radium(LocationInputForm);
+export default Radium(LocationInputForm)

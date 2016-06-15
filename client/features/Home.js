@@ -1,19 +1,18 @@
-var React = require('react');
+import React from 'react'
 
-var LocationInputForm = require('../components/LocationInputForm');
+import LocationInputForm from '../components/LocationInputForm'
 
-var Home = React.createClass({
-  render: function () {
-    return (
-      <div style={styles.contentContainer}>
-        <h2 style={styles.title}>Enter yo city fool!</h2>
-        <LocationInputForm />
-      </div>
-    );
-  }
-});
+function Home () {
+  const { contentContainer, title } = styles
+  return (
+    <div style={contentContainer}>
+      <h2 style={title}>Enter yo city fool!</h2>
+      <LocationInputForm />
+    </div>
+  )
+}
 
-var styles = {
+const styles = {
   contentContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -25,6 +24,6 @@ var styles = {
     color: 'blue',
     marginBottom: '20px'
   }
-};
+}
 
-module.exports = Home;
+export default Home

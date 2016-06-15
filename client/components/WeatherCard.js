@@ -1,24 +1,22 @@
-var React = require('react');
-var Radium = require('radium');
+import React, { PropTypes } from 'react'
+import Radium from 'radium'
+import moment from 'moment'
 
-var PropTypes = React.PropTypes;
-var moment = require('moment');
-
-var Weather = require('../api/Weather');
-var calcWindDirection = require('../utils/utils').calcWindDirection;
+import { getWeatherIconUrl } from '../api/Weather'
+import { calcWindDirection } from '../utils/utils'
 
 function WeatherCard (props) {
-  var date = moment(props.data.dt * 1000).format('dddd, MMMM D');
-  var iconUrl = Weather.getWeatherIconUrl(props.data.weather[0].icon);
-  var location = props.data.location;
-  var temp = props.data.temp;
-  var cloudPercent = props.data.clouds;
-  var humidity = props.data.humidity;
-  var windSpeed = props.data.speed;
-  var windDirectionAngle = props.data.deg;
-  var windDirection = calcWindDirection(props.data.deg);
-  var pressure = props.data.pressure;
-  var description = props.data.weather[0].description;
+  const date = moment(props.data.dt * 1000).format('dddd, MMMM D')
+  const iconUrl = getWeatherIconUrl(props.data.weather[0].icon)
+  const location = props.data.location
+  const temp = props.data.temp
+  const cloudPercent = props.data.clouds
+  const humidity = props.data.humidity
+  const windSpeed = props.data.speed
+  const windDirectionAngle = props.data.deg
+  const windDirection = calcWindDirection(props.data.deg)
+  const pressure = props.data.pressure
+  const description = props.data.weather[0].description
 
   if (props.mode === 'small') {
     return (
@@ -26,7 +24,7 @@ function WeatherCard (props) {
         <img style={styles.image} src={iconUrl} />
         <h3 style={styles.heading}>{date}</h3>
       </div>
-    );
+    )
   }
   else if (props.mode === 'large') {
     return (
@@ -43,7 +41,7 @@ function WeatherCard (props) {
           <li style={styles.listItem}>Pressure: {pressure} mbar</li>
         </ul>
       </div>
-    );
+    )
   }
 }
 
@@ -51,7 +49,7 @@ function WeatherCard (props) {
 WeatherCard.propTypes = {
   data: PropTypes.object.isRequired,
   mode: PropTypes.oneOf(['small', 'large']).isRequired
-};
+}
 
 WeatherCard.defaultProps = {
   data: {
@@ -59,9 +57,9 @@ WeatherCard.defaultProps = {
     weather: [{ icon: '01d' }]
   },
   mode: 'small'
-};
+}
 
-var styles = {
+const styles = {
   clickableCard: {
     color: 'blue',
     ':hover': {
@@ -94,6 +92,6 @@ var styles = {
     padding: '10px 0px',
     margin: '0px'
   }
-};
+}
 
-module.exports = Radium(WeatherCard);
+export default Radium(WeatherCard)
