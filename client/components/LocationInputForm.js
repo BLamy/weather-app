@@ -18,6 +18,12 @@ class LocationInputForm extends Component {
     })
   }
 
+  // reset the input value each time the component updates
+  // such as when the app routes to a different view
+  componentDidUpdate () {
+    this.refs.locationInput.value = '';
+  }
+
   setLocation (e) {
     e.preventDefault();
 

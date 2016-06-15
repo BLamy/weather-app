@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize.bind(this))
 
     // initial resize
     this.handleResize()
