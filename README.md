@@ -9,3 +9,13 @@ A super simple es6 react app (my first toy react app) that uses the openweather 
 3. In the same terminal run ```npm run start```
 4. Browse to: ```localhost:8080```
 5. Enjoy! :smiley:
+
+
+
+Refactor Goals:
+- [ ] Add Test / CI
+- [ ] favor classless react
+- [ ] Refactor Search API with RXJS 
+- [ ] Add Favorites feature using redux 
+- [ ] Update UI
+- [ ] Add Service Worker
