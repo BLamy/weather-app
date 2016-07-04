@@ -14,6 +14,10 @@ module.exports = {
     path: __dirname + '/dist',
     filename: 'index_bundle.js'
   },
+  devServer: {
+    port: 3000,
+    inline: true
+  },
   module: {
     loaders: [
       {
