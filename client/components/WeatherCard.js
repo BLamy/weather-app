@@ -5,47 +5,54 @@ import moment from 'moment'
 import { getWeatherIconUrl } from '../api/Weather'
 import { calcWindDirection } from '../utils/utils'
 
-function WeatherCard (props) {
-  const date = moment(props.data.dt * 1000).format('dddd, MMMM D')
-  const iconUrl = getWeatherIconUrl(props.data.weather[0].icon)
-  const location = props.data.location
-  const temp = props.data.temp
-  const cloudPercent = props.data.clouds
-  const humidity = props.data.humidity
-  const windSpeed = props.data.speed
-  const windDirectionAngle = props.data.deg
-  const windDirection = calcWindDirection(props.data.deg)
-  const pressure = props.data.pressure
-  const description = props.data.weather[0].description
+const SmallCard = ({ iconUrl, date }) => (
+  <div style={[styles.clickableCard, styles.card]}>
+    <img data-id='icon' style={styles.image} src={iconUrl} />
+    <h3 data-id='date' style={styles.heading}>{date}</h3>
+  </div>
+)
 
-  if (props.mode === 'small') {
-    return (
-      <div style={[styles.clickableCard, styles.card]}>
-        <img style={styles.image} src={iconUrl} />
-        <h3 style={styles.heading}>{date}</h3>
-      </div>
-    )
+const LargeCard = ({
+    iconUrl, date, location, description, temp, cloudPercent,
+    humidity, windSpeed, windDirection, windDirectionAngle, pressure
+  }) => (
+  <div style={styles.card}>
+    <img data-id='icon' style={styles.image} src={iconUrl} />
+    <h3 data-id='date' style={styles.heading}>{date}</h3>
+    <h3 data-id='location' style={styles.heading}>{location}</h3>
+    <h3 data-id='description' style={styles.heading}>{description}</h3>
+    <ul style={styles.list}>
+      <li data-id='temp' style={styles.listItem}>{temp.max}&deg; F/{temp.min}&deg; F</li>
+      <li data-id='cloudPercent' style={styles.listItem}>Cloud Cover: {cloudPercent}%</li>
+      <li data-id='humidity' style={styles.listItem}>Humidity: {humidity}%</li>
+      <li data-id='wind' style={styles.listItem}>Wind: {windSpeed} mph {windDirection} ({windDirectionAngle}&deg;)</li>
+      <li data-id='pressure' style={styles.listItem}>Pressure: {pressure} mbar</li>
+    </ul>
+  </div>
+)
+
+const WeatherCard = ({ mode, data }) => {
+  const date = moment(data.dt * 1000).format('dddd, MMMM D')
+  const iconUrl = getWeatherIconUrl(data.weather[0].icon)
+
+  if (mode === 'small') {
+    return SmallCard({iconUrl, date});
   }
-  else if (props.mode === 'large') {
-    return (
-      <div style={styles.card}>
-        <img style={styles.image} src={iconUrl} />
-        <h3 style={styles.heading}>{date}</h3>
-        <h3 style={styles.heading}>{location}</h3>
-        <h3 style={styles.heading}>{description}</h3>
-        <ul style={styles.list}>
-          <li style={styles.listItem}>{temp.max}&deg; F/{temp.min}&deg; F</li>
-          <li style={styles.listItem}>Cloud Cover: {cloudPercent}%</li>
-          <li style={styles.listItem}>Humidity: {humidity}%</li>
-          <li style={styles.listItem}>Wind: {windSpeed} mph {windDirection} ({windDirectionAngle}&deg;)</li>
-          <li style={styles.listItem}>Pressure: {pressure} mbar</li>
-        </ul>
-      </div>
-    )
+  else if (mode === 'large') {
+    const {location, temp, humidity, pressure} = data;
+    const cloudPercent = data.clouds
+    const windSpeed = data.speed
+    const windDirectionAngle = data.deg
+    const windDirection = calcWindDirection(data.deg)
+    const description = data.weather[0].description
+
+    return LargeCard({
+        iconUrl, date, location, description, temp, cloudPercent,
+        humidity, windSpeed, windDirection, windDirectionAngle, pressure
+      });
   }
 }
 
-// TODO: Diego 20160613: Add detailed shape proptype for data object
 WeatherCard.propTypes = {
   data: PropTypes.object.isRequired,
   mode: PropTypes.oneOf(['small', 'large']).isRequired
@@ -93,5 +100,7 @@ const styles = {
     margin: '0px'
   }
 }
+
+export { WeatherCard };// Headless Test without Radium
 
 export default Radium(WeatherCard)
